@@ -1,5 +1,7 @@
 from tkinter import *
-import backend
+from backend import Database
+
+database = Database("library.db")
 
 def get_selected_row(event): #the 'event' parameter is fixed for this function
     global selected_tuple
@@ -16,24 +18,24 @@ def get_selected_row(event): #the 'event' parameter is fixed for this function
 
 def view_command():
     list1.delete(0,END) # starting from 0 to the last index , all will be deleted.
-    for row in backend.view():
+    for row in database.view():
         list1.insert(END,row) # END - to make sure a new entry is inserted at the end of the last one(if any).
 
 def search_command():
     list1.delete(0,END) 
-    for row in backend.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+    for row in database.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
         list1.insert(END,row) 
 
 def add_command():
-    backend.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
     list1.delete(0,END)
     list1.insert(END,(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())) 
 
 def delete_command():
-    backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
 
 def update_command():
-    backend.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())   
+    database.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())   
 
 
 window= Tk()
